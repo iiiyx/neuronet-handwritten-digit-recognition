@@ -5,7 +5,8 @@ import numpy as np
 from keras.datasets import mnist
 from keras.engine.training import Model
 
-from main import CHECKPOINT_PATH, create_model, norm, prepare_data
+from model import create_model, norm
+from train import CHECKPOINT_PATH
 
 
 def recognize(model: Model, test_imgs, n):

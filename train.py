@@ -2,15 +2,11 @@ import matplotlib.pyplot as plt
 import tensorflow as tf
 from keras.datasets import mnist
 from keras.engine.training import Model
-from keras.layers import Dense, Flatten
-from keras.models import Sequential
 from keras.utils import to_categorical
 
+from model import create_model, norm
+
 CHECKPOINT_PATH = "./checkpoints/cp"
-
-
-def norm(imgs):
-    return imgs / 255
 
 
 def show_first_imgs(imgs, n):
@@ -30,24 +26,6 @@ def train(model: Model, train_imgs, train_vals_cat) -> None:
     print("<<<<Stop training")
 
     model.save_weights(CHECKPOINT_PATH)
-
-
-def create_model() -> Model:
-    model = Sequential(
-        [
-            Flatten(input_shape=(28, 28, 1)),
-            Dense(128, activation="relu"),
-            Dense(10, activation="softmax"),
-        ]
-    )
-
-    print(model.summary())
-
-    model.compile(
-        optimizer="adam", loss="categorical_crossentropy", metrics=["accuracy"]
-    )
-
-    return model
 
 
 def prepare_data():
