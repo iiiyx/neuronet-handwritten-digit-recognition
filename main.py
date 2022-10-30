@@ -9,8 +9,8 @@ from keras.utils import to_categorical
 CHECKPOINT_PATH = "./checkpoints/cp"
 
 
-def norm(train_imgs):
-    return train_imgs / 255
+def norm(imgs):
+    return imgs / 255
 
 
 def show_first_imgs(imgs, n):
@@ -23,15 +23,13 @@ def show_first_imgs(imgs, n):
     plt.show()
 
 
-def train(model, train_imgs, train_vals_cat) -> Model:
+def train(model: Model, train_imgs, train_vals_cat) -> None:
     # show_first_imgs(train_imgs, 25)
     print("\n>>>>Start training")
     model.fit(train_imgs, train_vals_cat, batch_size=32, epochs=5, validation_split=0.2)
     print("<<<<Stop training")
 
     model.save_weights(CHECKPOINT_PATH)
-
-    return model
 
 
 def create_model() -> Model:
@@ -73,8 +71,7 @@ if __name__ == "__main__":
     train_imgs, train_vals_cat, test_imgs, test_vals_cat = prepare_data()
 
     model = create_model()
-    # train(model, train_imgs, train_vals_cat)
-    model.load_weights(CHECKPOINT_PATH)
+    train(model, train_imgs, train_vals_cat)
 
     print("\n>>>>Start evaluating")
     model.evaluate(test_imgs, test_vals_cat)
